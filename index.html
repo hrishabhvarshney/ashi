@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e7e1d6">
+<title>Ashi · Tumhare liye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#e7e1d6;--cream:#fbf8f2;--blush:#efe2dd;--mint:#dde6dc;--butter:#efe6d2;--green:#1d382e;--maroon:#6b3443;--rose:#b9566b;--gold:#c9a45c;
+  --sans:'Figtree','Nirmala UI',system-ui,sans-serif;--hand:'Fraunces',Georgia,serif;
+  --gap:10px;--r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--sans);color:var(--green);min-height:100vh;overflow-x:hidden;line-height:1.35;
+  background:var(--pink);
+  padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--maroon);outline-offset:2px}
+
+.frame{container-type:inline-size;width:min(1180px,100%);margin:0 auto;background:var(--cream);border-radius:28px;padding:12px;box-shadow:0 24px 70px rgba(40,30,20,.14)}
+.bento{--cols:2;display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-auto-rows:calc((100cqw - (var(--cols) - 1)*var(--gap))/var(--cols));gap:var(--gap);grid-auto-flow:dense}
+@media(min-width:900px){.frame{padding:18px;border-radius:36px}.bento{--cols:4;--gap:16px}:root{--r:26px}}
+
+.cell{position:relative;min-width:0;min-height:0;overflow:hidden;border-radius:var(--r);box-shadow:0 6px 18px rgba(40,30,20,.08);
+  animation:pop .7s cubic-bezier(.2,.9,.3,1.2) backwards;animation-delay:calc(var(--i)*55ms)}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(14px)}}
+.w{grid-column:span 2}.t{grid-row:span 2}
+
+/* photos */
+.photo{cursor:pointer;background:var(--blush)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 30%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+@media(hover:hover){.photo:hover img{transform:scale(1.05)}}
+.chip{position:absolute;left:8px;bottom:8px;right:8px;background:rgba(255,247,232,.94);color:var(--maroon);border-radius:14px;padding:5px 11px 6px;font-size:.78rem;font-weight:500;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+@media(min-width:900px){.chip{left:12px;bottom:12px;font-size:.95rem;padding:7px 14px 8px;border-radius:18px;right:60px}}
+.tag{position:absolute;top:10px;left:10px;background:var(--cream);color:var(--green);font-weight:600;font-size:.74rem;padding:3px 12px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2}
+.like{position:absolute;right:8px;top:8px;width:38px;height:38px;border-radius:50%;background:rgba(255,247,232,.94);color:#c9aab3;font-size:18px;display:grid;place-items:center;z-index:2;box-shadow:0 3px 10px rgba(0,0,0,.15);transition:transform .2s}
+@media(min-width:900px){.like{right:12px;top:auto;bottom:12px;width:44px;height:44px}}
+.like.on{color:var(--rose);animation:beat .45s}
+@keyframes beat{50%{transform:scale(1.35)}}
+
+/* profile */
+.profile{background:var(--mint);grid-column:span 2;grid-row:span 3;padding:clamp(18px,3vw,36px);display:flex;flex-direction:column;justify-content:center}
+@media(min-width:900px){.profile{grid-row:span 2}}
+.profile .hi{font-family:var(--hand);font-style:italic;font-weight:300;font-size:clamp(1.1rem,3.4vw,1.4rem);color:var(--maroon)}
+.profile h1{font-family:var(--hand);font-weight:300;font-size:clamp(4.6rem,20vw,8.4rem);line-height:.9;letter-spacing:-.035em;color:var(--green);margin:2px 0}
+.profile .nick{font-weight:500;font-size:clamp(1rem,3.4vw,1.25rem);color:var(--maroon);margin:4px 0 12px}
+.profile .bio{font-size:clamp(.92rem,3.4vw,1.05rem);color:#2c5a48;max-width:32em}
+.stats{display:flex;gap:clamp(14px,3vw,28px);margin-top:16px;padding-top:14px;border-top:1px solid rgba(29,56,46,.22)}
+.stats span{font-size:.8rem;line-height:1.1;color:#3b6a57}
+.stats b{display:block;font-family:var(--hand);font-size:clamp(1.4rem,4vw,1.9rem);color:var(--green);font-weight:400}
+
+/* envelope */
+.env{background:var(--blush);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:16px;text-align:center;cursor:pointer;grid-column:span 2}
+@media(min-width:900px){.env{grid-column:span 1;grid-row:span 2}}
+@media(max-width:899px){.env{flex-direction:row;gap:16px;text-align:left}}
+.mail{position:relative;width:min(132px,32vw);aspect-ratio:1.4;background:#dcc3bb;border-radius:8px;box-shadow:0 8px 16px rgba(109,29,54,.25);flex:none;transition:transform .3s}
+.mail::before{content:"";position:absolute;inset:0;border-radius:8px;background:#cfb2a8;clip-path:polygon(0 0,50% 58%,100% 0)}
+.mail::after{content:"";position:absolute;inset:0;border-radius:8px;background:#e8d6cf;clip-path:polygon(0 100%,50% 40%,100% 100%)}
+.seal{position:absolute;left:50%;top:50%;transform:translate(-50%,-30%);z-index:2;width:30px;height:30px;border-radius:50%;background:var(--maroon);color:#f3dfe3;display:grid;place-items:center;font-size:13px}
+@media(hover:hover){.env:hover .mail{transform:rotate(-4deg) translateY(-4px)}}
+.env h2{font-family:var(--hand);font-style:italic;font-weight:300;font-size:clamp(1.2rem,4vw,1.55rem);color:var(--maroon);line-height:1.15}
+.env p{font-size:.85rem;color:#8a6a70;margin-top:6px}
+
+/* quote */
+.reasons{background:var(--butter);grid-column:span 2;grid-row:span 3;padding:clamp(20px,4vw,44px);display:flex;flex-direction:column;justify-content:center}
+@media(min-width:900px){.reasons{grid-row:span 2}}
+.reasons blockquote{font-family:var(--hand);font-weight:300;font-size:clamp(1.7rem,6vw,2.7rem);line-height:1.12;letter-spacing:-.015em;color:var(--green)}
+.reasons cite{display:block;margin-top:16px;font-style:normal;font-size:.9rem;color:#7a6a55}
+
+/* end */
+.end{background:var(--green);color:var(--cream);grid-column:1/-1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:16px;gap:6px}
+@media(min-width:900px){.end{flex-direction:row;justify-content:space-between;text-align:left;padding:0 clamp(28px,5vw,70px);gap:30px}}
+.end h2{font-family:var(--hand);font-weight:300;font-size:clamp(1.8rem,6vw,3.4rem);line-height:1.05;letter-spacing:-.02em;color:#f3e7c8}
+.end p{font-size:clamp(.9rem,3vw,1.05rem);color:#b9cfc2}
+
+/* letter + lightbox */
+.ov{position:fixed;inset:0;height:100dvh;z-index:30;display:none;align-items:center;justify-content:center;background:rgba(30,22,20,.82);backdrop-filter:blur(6px);padding:calc(16px + env(safe-area-inset-top)) 14px calc(16px + env(safe-area-inset-bottom))}
+.ov.open{display:flex}
+.paper{position:relative;width:min(460px,100%);max-height:100%;overflow:auto;background:#fffdf8;border-radius:10px;padding:40px clamp(24px,6vw,40px) 34px;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:letter .6s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes letter{from{opacity:0;transform:translateY(60px) rotate(-3deg)}}
+.paper p{font-family:var(--hand);font-weight:300;font-size:clamp(1.05rem,3.8vw,1.2rem);line-height:1.65;color:#3b2a2e;margin-bottom:1.1em;opacity:0;animation:ink .7s ease forwards;animation-delay:calc(.5s + var(--n)*.45s)}
+.paper p.sign{font-style:italic;color:var(--maroon);text-align:right;margin:1.4em 0 0}
+@keyframes ink{to{opacity:1}}
+.x{position:absolute;top:calc(10px + env(safe-area-inset-top));right:12px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:26px;display:grid;place-items:center;z-index:2}
+.lb{flex-direction:column;background:rgba(24,18,16,.95)}
+.lb figure{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%;animation:pop .4s ease}
+.lb img{max-width:100%;max-height:calc(100dvh - 190px);border-radius:16px;border:5px solid var(--cream);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb figcaption{font-family:var(--hand);font-style:italic;font-weight:300;font-size:clamp(1.1rem,4vw,1.4rem);color:#f3e7c8;text-align:center;max-width:26em;line-height:1.35}
+.nav{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:26px;display:grid;place-items:center;top:50%;margin-top:-24px}
+.pv{left:10px}.nv{right:10px}
+.count{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom));color:#cdbfb0;font-size:.9rem}
+@media(max-width:600px){.nav{top:auto;margin:0;bottom:calc(10px + env(safe-area-inset-bottom))}.pv{left:18px}.nv{right:18px}}
+
+.burst{position:fixed;pointer-events:none;z-index:60;color:var(--rose);animation:rise 1.6s ease-out forwards}
+@keyframes rise{to{transform:translateY(-140px);opacity:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.paper p{opacity:1}}
+</style>
+</head>
+<body>
+<div class="frame"><main class="bento" id="bento"></main></div>
+
+<div class="ov" id="letter" role="dialog" aria-modal="true" aria-label="Chitthi">
+  <button class="x" data-close aria-label="Band karo">×</button>
+  <div class="paper" id="paper"></div>
+</div>
+<div class="ov lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="x" data-close aria-label="Band karo">×</button>
+  <button class="nav pv" id="prev" aria-label="Pichhli photo">‹</button>
+  <button class="nav nv" id="next" aria-label="Agli photo">›</button>
+  <figure id="fig"></figure><div class="count" id="count"></div>
+</div>
+
+<script>
+/* ===== Yahan apna personal note aur naam badal sakte ho ===== */
+const FROM = "Tumhara dost";
+const NOTE = [
+  "Ashi,",
+  "Yeh tasveerein ek saath dekhin to laga ki kuch cheezein waqt ke saath nahi badalti. Bachpan ki muskaan aur aaj ki muskaan, dono mein wahi apnapan hai.",
+  "Bas itna kehna tha: aise hi khush raho, aur apne andaaz mein chamakti raho.",
+  "Yeh page tumhare liye hai, ek chhoti si yaad ki tarah."
+];
+const QUOTE = "Kuch muskaan waqt ke saath bhi nahi badalti.";
+
+/* kind: w=wide 2x1, t=tall 1x2, s=square 1x1 */
+const PH = [
+  {s:"09",k:"t",c:"Gulaabi roshni, shaant si muskaan",pos:"50% 25%"},
+  {s:"03",k:"t",c:"Kaali saree, sunehri bunaai",pos:"50% 30%"},
+  {s:"01",k:"w",c:"Hari saree aur jhumkon ki jhankaar",pos:"60% 25%"},
+  {s:"02",k:"t",c:"Shuru se hi wahi pyaari muskaan",tag:"Bachpan",pos:"50% 55%"},
+  {s:"05",k:"w",c:"Dhoop mein khilta chehra",pos:"70% 30%"},
+  {s:"07",k:"t",c:"Ek halki si shararat",pos:"50% 30%"},
+  {s:"06",k:"t",c:"Sharmeeli si muskaan",tag:"Bachpan",pos:"45% 35%"},
+  {s:"08",k:"w",c:"Thehri hui nazar, hilta hua jhumka",pos:"60% 30%"},
+  {s:"04",k:"w",c:"Baarish, chhatri aur befikri",tag:"Bachpan",pos:"60% 45%"},
+  {s:"11",k:"w",c:"Thodi si masti, thoda sa andaaz",pos:"75% 30%"},
+  {s:"10",k:"t",c:"Chhoti si explorer",tag:"Bachpan",pos:"55% 45%"},
+  {s:"12",k:"s",c:"Chashme aur attitude",tag:"Bachpan",pos:"50% 40%"},
+  {s:"14",k:"s",c:"Sukoon wali muskaan",pos:"55% 30%"},
+  {s:"13",k:"w",c:"Lehraate baal, gehri nazar",pos:"60% 30%"}
+].map(p=>({...p,src:`images/ashi-${p.s}.jpg`}));
+
+const $=id=>document.getElementById(id);
+let liked={};try{liked=JSON.parse(localStorage.getItem("ashi-likes")||"{}")}catch(e){}
+const store=()=>{try{localStorage.setItem("ashi-likes",JSON.stringify(liked))}catch(e){}};
+const nLikes=()=>Object.values(liked).filter(Boolean).length;
+function burst(){}
+const mk=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
+
+const bento=$("bento");let idx=0;
+const add=el=>{el.style.setProperty("--i",Math.min(idx++,14));bento.appendChild(el)};
+
+/* profile */
+const pr=mk("section","cell profile",`<p class="hi">Namaste</p><h1>Ashi</h1><p class="nick">आशी</p>
+<p class="bio">Kuch yaadein, ek jagah. Kisi bhi photo par tap karke use bada dekh sakti ho, aur jo pasand aaye use heart kar sakti ho. Ek chhoti si chitthi bhi rakhi hai.</p>
+<div class="stats"><span><b>${PH.length}</b>tasveerein</span><span><b id="lk">${nLikes()}</b>pasand ki</span><span><b>5</b>bachpan ki</span></div>`);
+add(pr);
+
+/* photos + extras, placed in a deliberate order */
+const cards=[];
+function photo(p){
+  const c=mk("div","cell photo "+p.k);c.tabIndex=0;c.setAttribute("role","button");c.setAttribute("aria-label",p.c);
+  c.style.setProperty("--pos",p.pos);
+  c.innerHTML=`${p.tag?`<span class="tag">${p.tag}</span>`:""}<img src="${p.src}" alt="" loading="lazy" decoding="async"><div class="chip">${p.c}</div>`;
+  const l=mk("button","like"+(liked[p.src]?" on":""),"♥");l.setAttribute("aria-label","Pasand aayi");
+  l.onclick=e=>{e.stopPropagation();l.classList.toggle("on");liked[p.src]=l.classList.contains("on");store();$("lk").textContent=nLikes();if(liked[p.src])burst(e.clientX,e.clientY)};
+  c.appendChild(l);
+  const i=cards.length;cards.push(p);
+  c.onclick=()=>openLb(i);c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLb(i)}};
+  add(c);
+}
+/* envelope */
+function envelope(){
+  const e=mk("div","cell env",`<div class="mail"><span class="seal">♥</span></div><div><h2>Ek chhoti si chitthi</h2><p>Padhne ke liye tap karo</p></div>`);
+  e.tabIndex=0;e.setAttribute("role","button");e.setAttribute("aria-label","Chitthi kholo");
+  const go=ev=>{const r=e.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,9);openLetter()};
+  e.onclick=go;e.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();go()}};add(e);
+}
+/* quote */
+function reasons(){add(mk("section","cell reasons",`<blockquote>${QUOTE}</blockquote><cite>Ashi ki tasveerein, bachpan se ab tak</cite>`))}
+const order=[()=>photo(PH[0]),()=>photo(PH[1]),envelope,()=>photo(PH[2]),()=>photo(PH[3]),()=>photo(PH[4]),reasons,()=>photo(PH[5]),()=>photo(PH[6]),()=>photo(PH[7]),()=>photo(PH[8]),()=>photo(PH[9]),()=>photo(PH[10]),()=>photo(PH[11]),()=>photo(PH[13]),()=>photo(PH[12])];
+order.forEach(f=>f());
+
+const end=mk("footer","cell end",`<h2>Hamesha yunhi muskuraati raho.</h2><p>${FROM} ki taraf se</p>`);add(end);
+
+/* overlays */
+let lastFocus=null;
+function openOv(el){lastFocus=document.activeElement;el.classList.add("open");document.body.style.overflow="hidden";const x=el.querySelector(".x");x&&x.focus()}
+function closeAll(){document.querySelectorAll(".ov.open").forEach(o=>o.classList.remove("open"));document.body.style.overflow="";lastFocus&&lastFocus.focus()}
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeAll);
+document.querySelectorAll(".ov").forEach(o=>o.addEventListener("click",e=>{if(e.target===o||e.target.tagName==="FIGURE")closeAll()}));
+function openLetter(){
+  $("paper").innerHTML=NOTE.map((t,i)=>`<p style="--n:${i}">${t}</p>`).join("")+`<p class="sign" style="--n:${NOTE.length}">— ${FROM}</p>`;
+  openOv($("letter"));
+}
+let cur=0;
+function openLb(i){
+  cur=(i+cards.length)%cards.length;const p=cards[cur];
+  $("fig").innerHTML="";const im=new Image();im.src=p.src;im.alt=p.c;const fc=mk("figcaption","");fc.textContent=p.c;$("fig").append(im,fc);
+  $("count").textContent=(cur+1)+" / "+cards.length;
+  if(!$("lb").classList.contains("open"))openOv($("lb"));
+}
+$("prev").onclick=()=>openLb(cur-1);$("next").onclick=()=>openLb(cur+1);
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeAll();
+  if($("lb").classList.contains("open")){if(e.key==="ArrowLeft")openLb(cur-1);if(e.key==="ArrowRight")openLb(cur+1)}
+});
+let sx=0;$("lb").addEventListener("touchstart",e=>sx=e.touches[0].clientX,{passive:true});
+$("lb").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)openLb(cur+(dx<0?1:-1))},{passive:true});
+</script>
+</body>
+</html>
